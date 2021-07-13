@@ -1,0 +1,330 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Users documentation",
+    "description": "This is an API users",
+    "version": "1.0.0",
+    "contact": {
+      "email": "andersonfebs@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "user name sample",
+                "email": "user email sample"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "1feff8f7-badc-4282-8fb3-e225471bd23c",
+                  "admin": false,
+                  "name": "Anderson",
+                  "email": "andersonfebs@gmail.com",
+                  "created_at": "2021-07-13T02:27:45.942Z",
+                  "updated_at": "2021-07-13T02:27:45.942Z"
+                }
+              }              
+            }     
+          },
+          "400": {
+            "description": "E-mail já está sendo utilizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "E-mail já está sendo utilizado"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Lista todos os usuários",
+        "description": "Somente usuário `admin` pode acessar",
+        "parameters": [{
+          "in": "header",
+          "name": "user_id",
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": [
+                  {                  
+                    "id": "1feff8f7-badc-4282-8fb3-e225471bd23c",
+                    "name":"Anderson",
+                    "admin":false,
+                    "email":"andersonfebs@gmail.com",
+                    "created_at":"2021-07-13T02:27:45.942Z",
+                    "updated_at":"2021-07-13T02:27:45.942Z"                 
+                  },
+                  {                  
+                    "id": "1feff8f7-badc-4282-8fb3-e225471bd23c",
+                    "name":"Anderson",
+                    "admin":false,
+                    "email":"andersonfebs@gmail.com",
+                    "created_at":"2021-07-13T02:27:45.942Z",
+                    "updated_at":"2021-07-13T02:27:45.942Z"                 
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário sem permissão ou usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Usuário sem permissão ou usuário não encontrado"
+                }
+              }
+            }
+
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Retorna um usuário específico",
+        "description": "Retorna um usuário específico a partir de um `user_id`",
+        "parameters": [{
+          "in": "path",
+          "name": "user_id",
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "1feff8f7-badc-4282-8fb3-e225471bd23c",
+                  "name":"Anderson",
+                  "admin":false,
+                  "email":"andersonfebs@gmail.com",
+                  "created_at":"2021-07-13T02:27:45.942Z",
+                  "updated_at":"2021-07-13T02:27:45.942Z" 
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Usuário não encontrado"
+                }
+              }
+            }
+          }
+        }
+      }      
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Altera a permissão de um usuário para admin",
+        "description": "Altera a permissão de um usuário específico a partir de um `user_id`",
+        "parameters": [{
+          "in": "path",
+          "name": "user_id",
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "1feff8f7-badc-4282-8fb3-e225471bd23c",
+                  "name":"Anderson",
+                  "admin":false,
+                  "email":"andersonfebs@gmail.com",
+                  "created_at":"2021-07-13T02:27:45.942Z",
+                  "updated_at":"2021-07-13T02:27:45.942Z" 
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Usuário não encontrado"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
